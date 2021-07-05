@@ -5,9 +5,18 @@ using namespace TTTGame;
 Game::Game(size_t pSize, bool pPlayerFirst, TicTacToeAI* pAI): ai(pAI) {
 	field = new STATE[pSize * pSize];
 	size = pSize;
+
+	for (int i = 0; i < size * size; ++i) {
+		field[i] = EMPTY;
+	}
+
 	playerFirst = pPlayerFirst;
-	gameStop = false;
+	gameStop = size * size;
 	winner = EMPTY;
+
+	if (!playerFirst) {
+		aiMove();
+	}
 }
 
 Game::~Game() {
@@ -16,7 +25,7 @@ Game::~Game() {
 }
 
 bool Game::playerMove(size_t pY, size_t pX) {
-	if (pX >= size || pY >= size || gameStop) return false;
+	if (pX >= size || pY >= size || gameStop == 0) return false;
 	
 	size_t j = size * pY + pX;
 	if (field[j] != EMPTY) return false;
@@ -24,25 +33,35 @@ bool Game::playerMove(size_t pY, size_t pX) {
 	// player move
 	move(pY, pX, playerFirst);
 
-	if (getWinner() != EMPTY) {
-		// AI answer
-		size_t j = ai->Next(field, size, (!playerFirst ? CROSS : ZERO));
-		size_t Y = j / size;
-		size_t X = j % size;
-
-		move(Y, X, !playerFirst);
-		getWinner();
+	if (getWinner() == EMPTY) { // AI answer
+		aiMove();
 	}
 
 	return true;
 }
 
+void Game::aiMove() {
+	size_t j = ai->Next(field, size, (!playerFirst ? CROSS : ZERO));
+	size_t Y = j / size;
+	size_t X = j % size;
+
+	move(Y, X, !playerFirst);
+	getWinner();
+}
+
+std::pair<size_t, size_t> Game::lastAiMove() {
+	size_t j = ai->Last();
+	return { j / size, j % size };
+}
+
 void Game::move(size_t pY, size_t pX, bool first) {
-	if (gameStop) {
-		throw GameStopException();
+	if (gameStop == 0) {
+		// throw GameStopException();
+		return;
 	}
 
 	field[size * pY + pX] = (first ? CROSS : ZERO);
+	gameStop--;
 }
 
 STATE Game::getWinner() {
@@ -50,7 +69,7 @@ STATE Game::getWinner() {
 		winner = GameBasic::checkWinner(field, size);
 	}
 	if (winner != EMPTY) {
-		gameStop = true;
+		gameStop = 0;
 	}
 	return winner;
 }

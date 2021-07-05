@@ -141,8 +141,11 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameBasic.cpp" />
+    <ClCompile Include="GreadyAI.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MinimaxAI.cpp" />
     <ClCompile Include="RandomAI.cpp" />
+    <ClCompile Include="TicTacToe.cpp" />
     <ClCompile Include="Tools.cpp" />
     <ClCompile Include="WinTools.cpp" />
   </ItemGroup>
@@ -151,6 +154,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBasic.h" />
     <ClInclude Include="gameparams.h" />
+    <ClInclude Include="GreadyAI.h" />
+    <ClInclude Include="MinimaxAI.h" />
     <ClInclude Include="RandomAI.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="TicTacToeAI.h" />

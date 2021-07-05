@@ -3,7 +3,7 @@
 std::mt19937 Rnd::generator(std::chrono::high_resolution_clock::now().time_since_epoch().count() ^ (size_t)(new char));
 
 int Rnd::genInt(int a, int b) {
-	assert(a < b && "Wrong using random generator!");
+	assert(a <= b && "Wrong using random generator!");
 	return generator() % (b - a + 1) + a;
 }
 

@@ -6,7 +6,7 @@ TTTGame::RandomAI::~RandomAI() {
 
 int TTTGame::RandomAI::Next(const STATE* field, size_t size, STATE move) {
 	size_t cntEmpty = 0;
-	for (size_t i = 0; i < size; ++i) {
+	for (size_t i = 0; i < size * size; ++i) {
 		if (field[i] == STATE::EMPTY) {
 			cntEmpty++;
 		}
@@ -14,11 +14,11 @@ int TTTGame::RandomAI::Next(const STATE* field, size_t size, STATE move) {
 	if (cntEmpty == 0) return -1;
 	
 	size_t j = Rnd::genInt(1, cntEmpty);
-	for (size_t i = 0; i < size; ++i) {
+	for (size_t i = 0; i < size * size; ++i) {
 		if (field[i] == STATE::EMPTY) {
 			j--;
 			if (j == 0) {
-				return static_cast<int>(i);
+				return Move(i); // save last move;
 			}
 		}
 	}

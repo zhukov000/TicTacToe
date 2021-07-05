@@ -17,12 +17,15 @@ namespace TTTGame
 		// 0 - no, 1 - first, 2 - second
 		size_t Winner();
 		
+		//
+		std::pair<size_t, size_t> lastAiMove();
+
 		// return true if player moved first
 		inline bool isPlayerFirst() { return playerFirst; }
 
 		// return true if game was stopped
-		inline bool isGameStopped() { return gameStop; }
-
+		inline bool isGameStopped() { return gameStop == 0; }
+		// 
 		inline size_t Size() { return size; }
 
 	protected:
@@ -33,11 +36,13 @@ namespace TTTGame
 		STATE getWinner();
 
 	private:
+		void aiMove();
+
 		TicTacToeAI* ai;
 		STATE* field;
 		size_t size;
 		bool playerFirst;
-		bool gameStop;
+		int gameStop;
 		STATE winner;
 	};
 

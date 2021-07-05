@@ -28,6 +28,23 @@
 #define SIZE_TEXTBOX_HEIGHT		25
 
 /////////////////////////////////////////////////////////////
+// ComboBox 
+/////////////////////////////////////////////////////////////
+#define AI_SELECT_ID			103
+#define AI_SELECT_X				300
+#define AI_SELECT_Y				60
+#define AI_SELECT_WIDTH			150
+#define AI_SELECT_HEIGHT		200
+
+#define AI_RANDOM_ID			0
+#define AI_RANDOM_STR			"Случайный"
+#define AI_GREADY_ID			1
+#define AI_GREADY_STR			"Жадный"
+#define AI_MINIMAX_ID			2
+#define AI_MINIMAX_STR			"Минимакс"
+
+
+/////////////////////////////////////////////////////////////
 // GreetingLabel
 /////////////////////////////////////////////////////////////
 #define GREETING_LABEL_TEXT		"Введите размер игрового поля [3, 7]:"
@@ -46,6 +63,14 @@
 #define GAME_BUTTONS_PADDING	10
 
 /////////////////////////////////////////////////////////////
+// Game results
+/////////////////////////////////////////////////////////////
+#define GAME_RESAULT_TITLE		"Результаты игры"
+#define GAME_RESAULT_WIN		"Поздравляем! Вы победили!"
+#define GAME_RESAULT_LOST		"Компьютер победил. Возможно, в следующий раз вам повезет"
+#define GAME_RESAULT_TIE		"Игра окончена. Ничья"
+
+/////////////////////////////////////////////////////////////
 // Common
 /////////////////////////////////////////////////////////////
 #define MAX_LOADSTRING			100
@@ -56,3 +81,6 @@
 #define START_TITLE				"Начало игры"
 #define	YOU_FIRST_MOVE			"Ваш ход первый"
 #define	YOU_SECOND_MOVE			"Вы ходите вторым"
+
+
+
