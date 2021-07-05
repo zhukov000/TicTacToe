@@ -14,6 +14,6 @@ int TTTGame::MinimaxAI::Next(const STATE* field, size_t size, STATE move) {
 		}
 	}
 	if (cntEmpty == 0) return -1;
-	// TODO: gready logic
+	// TODO: minimax algo
 	return Move(j); // save last move;
 }

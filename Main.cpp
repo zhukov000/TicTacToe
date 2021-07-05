@@ -16,13 +16,6 @@ HWND hAISelect;
 HWND** ahGameButton;                                        // handles for game buttons
 TTTGame::Game* objGame;                                     // game object
 
-TTTGame::TicTacToeAI* AI[3] = 
-{ 
-    new TTTGame::RandomAI(),                                // random
-    new TTTGame::GreadyAI(),                                // gready
-    new TTTGame::MinimaxAI()                                // minimax
-};
-
 size_t fieldSize;
 size_t currentAI;
 bool playerFirst;
@@ -306,7 +299,13 @@ void GameStart(size_t size, HWND hWnd) {
     if (objGame) {
         delete objGame;
     }
-    objGame = new TTTGame::Game(size, playerFirst, AI[currentAI]);
+    TTTGame::TicTacToeAI* AI;
+
+    if (currentAI == 0) AI = new TTTGame::RandomAI(); // random
+    else if (currentAI == 1) AI = new TTTGame::GreadyAI(); // gready
+    else AI = new TTTGame::MinimaxAI(); // minimax
+
+    objGame = new TTTGame::Game(size, playerFirst, AI);
     // 
     size_t fi = size;
     size_t fj = size;
