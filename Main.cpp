@@ -199,17 +199,18 @@ LRESULT CALLBACK onInit(HWND hWnd) {
         // add string to combobox
         SendMessage(hAISelect, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)A);
     }
+    //
+    currentAI = GREADY_ID;
 
     // send the CB_SETCURSEL message to display an initial item in the selection field  
-    SendMessage(hAISelect, CB_SETCURSEL, (WPARAM)1, (LPARAM)0);
+    SendMessage(hAISelect, CB_SETCURSEL, (WPARAM)currentAI, (LPARAM)0);
 
     // init global params
     fieldSize = 0;
     playerFirst = false;
     ahGameButton = nullptr;
     objGame = nullptr;
-    currentAI = 1;
-
+    
     return 0;
 }
 
@@ -231,8 +232,11 @@ LRESULT CALLBACK onCommand(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
         size_t size = _wtoi(pMem);
         VirtualFree(pMem, 0, MEM_RELEASE);
 
-        if (size < 3 || size > 7) {
+        if (size < MIN_FIELD_SIZE || size > MAX_FIELD_SIZE) {
             ShowError(_T(INVALID_FIELD_SIZE), _T(ERROR_TITLE), hWnd);
+        }
+        else if (size > MAX_FIELD_SIZE_MM && currentAI == MINIMAX_ID) {
+            ShowError(_T(ATTENTION_MINIMAX), _T(ERROR_TITLE), hWnd);
         }
         else {
             // Ask who first
@@ -254,6 +258,15 @@ LRESULT CALLBACK onCommand(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
         if (HIWORD(wParam) == CBN_SELCHANGE)
         {
             currentAI = SendMessage((HWND)lParam, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+            if (currentAI == MINIMAX_ID) {
+                LPWSTR pMem = GetTextFromTextBox(hSizeTextBox);
+                size_t size = _wtoi(pMem);
+                VirtualFree(pMem, 0, MEM_RELEASE);
+
+                if (size > MAX_FIELD_SIZE_MM) {
+                    ShowInfo(_T(ATTENTION_MINIMAX), _T(ATTENTION_TITLE), hWnd);
+                }
+            }
         }
     }
     break;
@@ -301,9 +314,9 @@ void GameStart(size_t size, HWND hWnd) {
     }
     TTTGame::TicTacToeAI* AI;
 
-    if (currentAI == 0) AI = new TTTGame::RandomAI(); // random
-    else if (currentAI == 1) AI = new TTTGame::GreadyAI(); // gready
-    else AI = new TTTGame::MinimaxAI(); // minimax
+    if (currentAI == GREADY_ID) AI = new TTTGame::GreadyAI(); // gready
+    else if (currentAI == MINIMAX_ID) AI = new TTTGame::MinimaxAI(); // minimax
+    else AI = new TTTGame::RandomAI(); // random
 
     objGame = new TTTGame::Game(size, playerFirst, AI);
     // 

@@ -82,5 +82,14 @@
 #define	YOU_FIRST_MOVE			"Ваш ход первый"
 #define	YOU_SECOND_MOVE			"Вы ходите вторым"
 
+#define ATTENTION_TITLE			"Предупреждение"
+#define ATTENTION_MINIMAX		"Метод минимакса можно использовать только для игры 3x3. Для большей размерности используйте другие алгоритмы"
 
+#define RANDOM_ID				0
+#define GREADY_ID				1
+#define MINIMAX_ID				2
+
+#define MIN_FIELD_SIZE			3
+#define MAX_FIELD_SIZE_MM		3
+#define MAX_FIELD_SIZE			7
 

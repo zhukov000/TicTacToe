@@ -21,7 +21,7 @@ int TTTGame::MinimaxAI::Next(const STATE* field, size_t size, STATE move) {
 	for (size_t i = 0; i < size * size; ++i) {
 		if (field[i] == EMPTY) {
 			fieldCopy[i] = move;
-			int8_t tr = rate(fieldCopy, size, 1, move);
+			int8_t tr = rate(fieldCopy, size, 2, move);
 			if (tr >= 0) {
 				j = i;
 				if (tr == 1) break;
@@ -70,28 +70,37 @@ int8_t TTTGame::MinimaxAI::rate(STATE* field, size_t size, size_t step, STATE mo
 	if (cache.count(key) == 0) 
 	{
 		if (st == EMPTY) {
-			int8_t mn = 1, mx = -1;
-
-			for (size_t i = 0; i < size * size; ++i) {
-				if (field[i] == EMPTY) {
-					field[i] = (step % 2 != 0? move : pl_move);
-
-					int8_t v = rate(field, size, step + 1, move);
-					if (step % 2 != 0) {
-						if (v > mx) mx = v;
-					}
-					else {
-						if (v < mn) mn = v;
-					}
-
-					field[i] = EMPTY;
-				}
+			if (step == size * size) {
+				cache[key] = 0; // tie
 			}
+			else {
+				int8_t mn = 1, mx = -1;
 
-			cache[key] = (step % 2 != 0 ? mx : mn);
+				for (size_t i = 0; i < size * size; ++i) {
+					if (field[i] == EMPTY) {
+						field[i] = (step % 2 != 0 ? move : pl_move);
+
+						int8_t v = rate(field, size, step + 1, move);
+						if (step % 2 != 0) {
+							if (v > mx) mx = v;
+						}
+						else {
+							if (v < mn) mn = v;
+						}
+
+						field[i] = EMPTY;
+					}
+				}
+				cache[key] = (step % 2 != 0 ? mx : mn);
+			}
 		}
 		else {
-			cache[key] = (step % 2 != 0 ? 1 : -1);
+			if ((step % 2 == 0 && move == ZERO) || (step % 2 != 0 && move == CROSS)) {
+				cache[key] = 1;
+			}	
+			else {
+				cache[key] = -1;
+			}	
 		}
 	}
 	return cache[key];
