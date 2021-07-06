@@ -201,14 +201,14 @@ LRESULT CALLBACK onInit(HWND hWnd) {
     }
 
     // send the CB_SETCURSEL message to display an initial item in the selection field  
-    SendMessage(hAISelect, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+    SendMessage(hAISelect, CB_SETCURSEL, (WPARAM)1, (LPARAM)0);
 
     // init global params
     fieldSize = 0;
     playerFirst = false;
     ahGameButton = nullptr;
     objGame = nullptr;
-    currentAI = 0;
+    currentAI = 1;
 
     return 0;
 }
