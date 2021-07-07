@@ -33,7 +33,7 @@
     <ClCompile Include="GameBasic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TicTacToe.cpp">
+    <ClCompile Include="TicTacToeAI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GreadyAI.cpp">

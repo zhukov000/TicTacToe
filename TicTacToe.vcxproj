@@ -145,7 +145,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MinimaxAI.cpp" />
     <ClCompile Include="RandomAI.cpp" />
-    <ClCompile Include="TicTacToe.cpp" />
+    <ClCompile Include="TicTacToeAI.cpp" />
     <ClCompile Include="Tools.cpp" />
     <ClCompile Include="WinTools.cpp" />
   </ItemGroup>
