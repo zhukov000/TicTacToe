@@ -1,5 +1,6 @@
 
 #include "framework.h"
+#include "resource.h"
 
 // Global Variables:
 HINSTANCE hInst;											// current instance
@@ -16,9 +17,9 @@ HWND hAISelect;
 HWND** ahGameButton;                                        // handles for game buttons
 TTTGame::Game* objGame;                                     // game object
 
-size_t fieldSize;
-size_t currentAI;
-bool playerFirst;
+size_t fieldSize;                                           //
+size_t currentAI;                                           //
+bool playerFirst;                                           // true if the player do move first
 
 // Registers the window class
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -80,12 +81,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
     wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIcon(hInstance, IDI_APPLICATION);
+    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszMenuName = NULL;
     wcex.lpszClassName = szWindowClass;
-    wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
+    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON1));
 
     return RegisterClassExW(&wcex);
 }

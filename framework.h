@@ -19,13 +19,13 @@
 #include "Tools.h"
 #include "Game.h"
 
-// AI's
+// AIs
 #include "RandomAI.h"
 #include "GreadyAI.h"
 #include "MinimaxAI.h"
 
-// constant
-#include "resources.h"
+// constants
+#include "defines.h"
 
 /**
 * Macros

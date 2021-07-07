@@ -157,10 +157,17 @@
     <ClInclude Include="GreadyAI.h" />
     <ClInclude Include="MinimaxAI.h" />
     <ClInclude Include="RandomAI.h" />
-    <ClInclude Include="resources.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="defines.h" />
     <ClInclude Include="TicTacToeAI.h" />
     <ClInclude Include="Tools.h" />
     <ClInclude Include="WinTools.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TicTacToe.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="tic-tac-toe.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

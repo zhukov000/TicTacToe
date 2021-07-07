@@ -32,8 +32,16 @@ namespace TTTGame
 		// unpack key to field array
 		STATE* keyToField(TKey key, size_t size);
 		
-		// rate of positions
-		int8_t rate(STATE* field, size_t size, size_t step, STATE move);
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="field"></param>
+		/// <param name="size"></param>
+		/// <param name="stepAI">1 if next move AI, 0 if next move player</param>
+		/// <param name="moveAI">CROSS or ZERO</param>
+		/// <param name="stepsLeft"></param>
+		/// <returns></returns>
+		int8_t rate(STATE* field, size_t size, size_t stepAI, STATE moveAI, size_t stepsLeft);
 		
 		std::unordered_map<TKey, int8_t> cache;
 	};

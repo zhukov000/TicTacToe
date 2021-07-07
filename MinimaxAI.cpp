@@ -21,7 +21,7 @@ int TTTGame::MinimaxAI::Next(const STATE* field, size_t size, STATE move) {
 	for (size_t i = 0; i < size * size; ++i) {
 		if (field[i] == EMPTY) {
 			fieldCopy[i] = move;
-			int8_t tr = rate(fieldCopy, size, 2, move);
+			int8_t tr = rate(fieldCopy, size, 0, move, size * size - (move == CROSS ? 1 : 2));
 			if (tr >= 0) {
 				j = i;
 				if (tr == 1) break;
@@ -61,8 +61,9 @@ TTTGame::STATE* TTTGame::MinimaxAI::keyToField(TKey key, size_t size) {
 }
 
 // rate of positions
-int8_t TTTGame::MinimaxAI::rate(STATE* field, size_t size, size_t step, STATE move) {
-	STATE pl_move = (move == CROSS ? ZERO : CROSS);
+int8_t TTTGame::MinimaxAI::rate(STATE* field, size_t size, size_t stepAI, STATE moveAI, size_t stepsLeft) {
+	// player move
+	STATE movePlayer = (moveAI == CROSS ? ZERO : CROSS);
 	// cache
 	STATE st = GameBasic::checkWinner(field, size);
 	// get key
@@ -70,7 +71,7 @@ int8_t TTTGame::MinimaxAI::rate(STATE* field, size_t size, size_t step, STATE mo
 	if (cache.count(key) == 0) 
 	{
 		if (st == EMPTY) {
-			if (step == size * size) {
+			if (stepsLeft == 0) {
 				cache[key] = 0; // tie
 			}
 			else {
@@ -78,10 +79,10 @@ int8_t TTTGame::MinimaxAI::rate(STATE* field, size_t size, size_t step, STATE mo
 
 				for (size_t i = 0; i < size * size; ++i) {
 					if (field[i] == EMPTY) {
-						field[i] = (step % 2 != 0 ? move : pl_move);
+						field[i] = (stepAI % 2 != 0 ? moveAI : movePlayer);
 
-						int8_t v = rate(field, size, step + 1, move);
-						if (step % 2 != 0) {
+						int8_t v = rate(field, size, 1 - stepAI, moveAI, stepsLeft - 1);
+						if (stepAI % 2 != 0) {
 							if (v > mx) mx = v;
 						}
 						else {
@@ -91,11 +92,11 @@ int8_t TTTGame::MinimaxAI::rate(STATE* field, size_t size, size_t step, STATE mo
 						field[i] = EMPTY;
 					}
 				}
-				cache[key] = (step % 2 != 0 ? mx : mn);
+				cache[key] = (stepAI % 2 != 0 ? mx : mn);
 			}
 		}
 		else {
-			if ((step % 2 == 0 && move == ZERO) || (step % 2 != 0 && move == CROSS)) {
+			if (moveAI == st ) {
 				cache[key] = 1;
 			}	
 			else {
